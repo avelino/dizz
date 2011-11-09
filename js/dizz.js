@@ -1,3 +1,9 @@
+$(document).ready(function(){
+  $.getJSON('/js/maps/ino.json', function(data) {
+    alert(data)
+  })
+})
+
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -31,7 +37,7 @@ monsterImage.src = "images/monster.png";
 
 // Game objects
 var hero = {
-	speed: 256 // movement in pixels per second
+	speed: 256  // movement in pixels per second
 };
 var monster = {};
 var monstersCaught = 0;
@@ -53,8 +59,8 @@ var reset = function () {
 	hero.y = canvas.height / 2;
 
 	// Throw the monster somewhere on the screen randomly
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
+	monster.x = 4 + (Math.random() * (canvas.width - 64));
+	monster.y = 4 + (Math.random() * (canvas.height - 64));
 };
 
 // Update game objects
@@ -74,10 +80,10 @@ var update = function (modifier) {
 
 	// Are they touching?
 	if (
-		hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)
+		hero.x <= (monster.x + 12)
+		&& monster.x <= (hero.x + 12)
+		&& hero.y <= (monster.y + 12)
+		&& monster.y <= (hero.y + 12)
 	) {
 		++monstersCaught;
 		reset();
@@ -99,11 +105,13 @@ var render = function () {
 	}
 
 	// Score
-	ctx.fillStyle = "rgb(250, 250, 250)";
-	ctx.font = "24px Helvetica";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: " + monstersCaught, 32, 32);
+  if(16 in keysDown){
+  	ctx.fillStyle = "#333333";
+	  ctx.font = "10px Helvetica";
+  	ctx.textAlign = "left";
+	  ctx.textBaseline = "top";
+  	ctx.fillText("Count red cube kill: " + monstersCaught, 32, 32);
+  }
 };
 
 // The main game loop
